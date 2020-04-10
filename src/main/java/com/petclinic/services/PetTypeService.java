@@ -1,6 +1,15 @@
 package com.petclinic.services;
 
-import com.petclinic.model.PetType;
+import com.petclinic.repositories.PetTypeRepository;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
-public interface PetTypeService extends CrudService<PetType, Long> {
+@Service
+public class PetTypeService {
+
+    private final PetTypeRepository petTypeRepository;
+
+    public PetTypeService(PetTypeRepository petTypeRepository) {
+        this.petTypeRepository = petTypeRepository;
+    }
 }

@@ -1,6 +1,15 @@
 package com.petclinic.services;
 
-import com.petclinic.model.Pet;
+import com.petclinic.repositories.PetRepository;
+import org.springframework.stereotype.Service;
 
-public interface PetService extends CrudService<Pet, Long> {
+@Service
+public class PetService {
+
+    private final PetRepository petRepository;
+
+    public PetService(PetRepository petRepository) {
+        this.petRepository = petRepository;
+    }
+
 }
