@@ -1,8 +1,10 @@
 package com.petclinic.bootstrap;
 
 import com.petclinic.model.Owner;
+import com.petclinic.model.PetType;
 import com.petclinic.model.Vet;
 import com.petclinic.services.OwnerService;
+import com.petclinic.services.PetTypeService;
 import com.petclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -14,14 +16,25 @@ public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    private final PetTypeService petTypeService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.petTypeService = petTypeService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+        PetType dog = new PetType();
+        dog.setName("Dog");
+
+        PetType cat = new PetType();
+        cat.setName("Cat");
+
+        petTypeService.save(dog);
+        petTypeService.save(cat);
 
         Owner owner = new Owner();
         owner.setFirstName("Rufat");
@@ -45,5 +58,6 @@ public class DataLoader implements CommandLineRunner {
 
         System.out.println(Arrays.toString(ownerService.findAll().toArray()));
         System.out.println(Arrays.toString(vetService.findAll().toArray()));
+        System.out.println(Arrays.toString(petTypeService.findAll().toArray()));
     }
 }

@@ -1,11 +1,46 @@
 package com.petclinic.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
+@Entity
+@Table(name = "pets")
 public class Pet extends BaseEntity{
-    private PetType petType;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "birthdate")
     private LocalDate birthDate;
+
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    private PetType petType;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
     private Owner owner;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
+    private Set<Visit> visits = new HashSet<>();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
 
     public PetType getPetType() {
         return petType;
@@ -23,11 +58,11 @@ public class Pet extends BaseEntity{
         this.owner = owner;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
+    public Set<Visit> getVisits() {
+        return visits;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+    public void setVisits(Set<Visit> visits) {
+        this.visits = visits;
     }
 }
